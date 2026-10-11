@@ -18,6 +18,10 @@
  *
  * Setiap tamu mengisi RSVP di undangan, datanya otomatis masuk sebagai baris baru
  * di sheet "RSVP" pada spreadsheet ini.
+ *
+ * Semua tamu juga bisa saling melihat Ucapan & Doa: saat halaman undangan dibuka,
+ * script.js memanggil endpoint ini (doGet) untuk mengambil seluruh ucapan yang
+ * tersimpan di sheet, lalu menampilkannya sebagai buku tamu bersama.
  */
 
 const SHEET_NAME = "RSVP";
@@ -41,8 +45,26 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  const sheet = getOrCreateSheet();
+  const lastRow = sheet.getLastRow();
+  let comments = [];
+
+  if (lastRow > 1) {
+    const rows = sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
+    comments = rows
+      .map(row => ({
+        timestamp: row[0] instanceof Date ? row[0].toISOString() : String(row[0]),
+        guestName: row[1] || "",
+        name: row[2] || "",
+        status: row[3] || "",
+        message: row[4] || ""
+      }))
+      .filter(c => c.name && c.message)
+      .reverse(); // newest first
+  }
+
   return ContentService
-    .createTextOutput(JSON.stringify({ result: "ok", info: "RSVP endpoint is live" }))
+    .createTextOutput(JSON.stringify({ result: "ok", comments: comments }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 

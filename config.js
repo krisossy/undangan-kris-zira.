@@ -107,7 +107,6 @@ const WEDDING_CONFIG = {
     title: "Sezairi - It's You (Official Music Video)",
     url: "https://www.youtube.com/watch?v=QZng89VxKWg"
   },
-  fallbackAudioUrl: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-piano-113579.mp3",
 
   // RSVP otomatis ke Google Sheets (via Google Apps Script Web App)
   // Setelah deploy Apps Script, ganti scriptUrl di bawah dengan URL deployment Anda.

@@ -6,7 +6,6 @@
 let ytPlayer = null;
 let isMusicPlaying = false;
 let isYtReady = false;
-let fallbackAudio = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initGuestName();
@@ -171,9 +170,6 @@ function renderContent() {
 
 /* 3. Official YouTube Audio Playback: Sezairi - It's You */
 function initYouTubeAudio() {
-  fallbackAudio = new Audio(WEDDING_CONFIG.fallbackAudioUrl);
-  fallbackAudio.loop = true;
-
   // Insert YouTube IFrame API script tag
   const tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
@@ -234,10 +230,7 @@ function onPlayerStateChange(event) {
 }
 
 function onPlayerError(err) {
-  console.log("YouTube Player Error, switching to fallback audio:", err);
-  if (isMusicPlaying) {
-    fallbackAudio.play().catch(() => {});
-  }
+  console.log("YouTube Player Error:", err);
 }
 
 function startMusic() {
@@ -246,16 +239,9 @@ function startMusic() {
     try {
       ytPlayer.playVideo();
       updateMusicButton(true);
-      return;
     } catch(e) {
       console.log("Error invoking yt playVideo:", e);
     }
-  }
-  // Fallback
-  if (fallbackAudio) {
-    fallbackAudio.play().then(() => {
-      updateMusicButton(true);
-    }).catch(e => console.log("Audio play prevented:", e));
   }
 }
 
@@ -265,16 +251,11 @@ function toggleMusic() {
     if (ytPlayer && isYtReady && ytPlayer.pauseVideo) {
       try { ytPlayer.pauseVideo(); } catch(e) {}
     }
-    if (fallbackAudio) {
-      fallbackAudio.pause();
-    }
     updateMusicButton(false);
   } else {
     isMusicPlaying = true;
     if (ytPlayer && isYtReady && ytPlayer.playVideo) {
       try { ytPlayer.playVideo(); } catch(e) {}
-    } else if (fallbackAudio) {
-      fallbackAudio.play().catch(() => {});
     }
     updateMusicButton(true);
   }
@@ -380,11 +361,11 @@ function openLightbox(src, caption) {
   }
 }
 
-/* 6. RSVP Form & Guestbook Comments (Saved to https://github.com/krisossy/undangan-kris-zira.) */
+/* 6. RSVP Form & Guestbook Comments (Ucapan & Doa bersama, tersimpan & tampil dari Google Sheet) */
 
 function initRSVPForm() {
   const form = document.getElementById('rsvp-form');
-  renderGuestbook();
+  loadGuestbookFromSheet();
 
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -396,15 +377,6 @@ function initRSVPForm() {
 
       if (!nameInput || !messageInput) return;
 
-      const newComment = {
-        name: nameInput,
-        status: statusInput,
-        message: messageInput,
-        time: "Baru saja"
-      };
-
-      saveComment(newComment);
-      renderGuestbook();
       sendRSVPToSheet({
         guestName: currentGuestName,
         name: nameInput,
@@ -414,6 +386,9 @@ function initRSVPForm() {
 
       form.reset();
       showToast("Terima kasih! Ucapan & Doa Anda telah terkirim.");
+
+      // Beri waktu Apps Script menyimpan baris baru, lalu muat ulang buku tamu bersama
+      setTimeout(loadGuestbookFromSheet, 1500);
     });
   }
 }
@@ -429,21 +404,24 @@ function sendRSVPToSheet(payload) {
   }).catch(err => console.log("Gagal mengirim RSVP ke Google Sheets:", err));
 }
 
-function getStoredComments() {
-  const data = localStorage.getItem('wedding_comments_kris_zira_nov2026');
-  return data ? JSON.parse(data) : [];
-}
-
-function saveComment(comment) {
-  const comments = getStoredComments();
-  comments.unshift(comment);
-  localStorage.setItem('wedding_comments_kris_zira_nov2026', JSON.stringify(comments));
-}
-
-function renderGuestbook() {
+/* Ambil seluruh Ucapan & Doa dari Google Sheet, agar semua tamu bisa saling melihat */
+function loadGuestbookFromSheet() {
+  const scriptUrl = WEDDING_CONFIG.rsvp && WEDDING_CONFIG.rsvp.scriptUrl;
   const list = document.getElementById('guestbook-list');
-  const comments = getStoredComments();
+  if (!scriptUrl || scriptUrl.startsWith("PASTE_") || !list) return;
 
+  fetch(scriptUrl)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.result === "ok" && Array.isArray(data.comments)) {
+        renderGuestbook(data.comments);
+      }
+    })
+    .catch(err => console.log("Gagal memuat Ucapan & Doa dari Google Sheets:", err));
+}
+
+function renderGuestbook(comments) {
+  const list = document.getElementById('guestbook-list');
   if (!list) return;
 
   list.innerHTML = comments.map(c => `
@@ -453,9 +431,22 @@ function renderGuestbook() {
         <span class="attendance-badge ${c.status === 'Hadir' ? 'badge-hadir' : 'badge-tidak'}">${c.status}</span>
       </div>
       <p class="guestbook-msg">${escapeHtml(c.message)}</p>
-      <div class="guestbook-time"><i class="far fa-clock"></i> ${c.time}</div>
+      <div class="guestbook-time"><i class="far fa-clock"></i> ${formatGuestbookTime(c.timestamp)}</div>
     </div>
   `).join('');
+}
+
+function formatGuestbookTime(isoTimestamp) {
+  if (!isoTimestamp) return "";
+  const date = new Date(isoTimestamp);
+  if (isNaN(date.getTime())) return "";
+  return date.toLocaleString('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 }
 
 function escapeHtml(text) {
