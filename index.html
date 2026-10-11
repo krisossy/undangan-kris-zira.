@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>The Wedding of Kris & Zira</title>
+
+  <!-- SEO & Social Sharing Meta Tags -->
+  <meta name="description" content="Undangan Pernikahan Digital Kris Ossy Novian & Fazira Leonita Agustiningsih - Minggu, 15 November 2026. Kami mengundang Anda untuk berbagi kebahagiaan bersama kami." />
+  <meta property="og:title" content="The Wedding of Kris & Zira" />
+  <meta property="og:description" content="Undangan Pernikahan Digital Kris & Zira - Minggu, 15 November 2026" />
+  <meta property="og:image" content="assets/images/couple_original.jpg" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=5" />
+</head>
+<body>
+
+  <!-- Petals Canvas Background Animation -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- HIDDEN YOUTUBE AUDIO PLAYER (Sezairi - It's You Official MV) -->
+  <div id="yt-player" style="position:fixed; top:-500px; left:-500px; width:1px; height:1px; opacity:0; pointer-events:none;"></div>
+
+  <!-- COVER OVERLAY (SURAT UNDANGAN PEMBUKA) -->
+  <div id="cover-overlay" class="cover-overlay">
+    <div class="cover-card">
+      <div class="cover-subtitle">Undangan Pernikahan</div>
+      <h1 class="cover-title">Kris & Zira</h1>
+      <p id="cover-date" style="font-size:0.9rem; color:var(--color-gold-light); margin-bottom:1.5rem;">Minggu, 15 November 2026</p>
+
+      <div class="guest-box">
+        <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+        <div id="guest-name" class="guest-name">Tamu Undangan</div>
+      </div>
+
+      <button id="btn-open-invitation" class="btn-open">
+        <i class="fas fa-envelope-open"></i> Buka Undangan
+      </button>
+    </div>
+  </div>
+
+  <!-- FLOATING AUDIO PLAYER CONTROL -->
+  <div class="audio-player-floating">
+    <button id="music-btn" class="music-btn" title="Pemutar Musik: Sezairi - It's You">
+      <i id="music-icon" class="fas fa-compact-disc"></i>
+    </button>
+  </div>
+
+  <!-- MAIN INVITATION CONTENT -->
+  <div class="invitation-container">
+    <div class="bokeh-overlay"></div>
+
+    <!-- 1. HERO HEADER SECTION -->
+    <header class="hero-section">
+      <div class="hero-header-card">
+        <span class="hero-subtitle">The Wedding Of</span>
+        <h1 class="hero-names">Kris <span class="hero-ampersand">&</span> Zira</h1>
+        <div id="hero-date" class="hero-date">15.11.2026</div>
+
+        <!-- FOTO PASANGAN TERBARU (WAJAH 100% TERLIHAT UTUH & JERNIH) -->
+        <div class="hero-portrait-frame">
+          <img src="assets/images/couple_fit.jpg?v=5" alt="Kris & Zira" class="hero-portrait-img" />
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <div>GULIR KE BAWAH</div>
+        <i class="fas fa-chevron-down" style="margin-top:0.3rem;"></i>
+      </div>
+    </header>
+
+    <!-- 2. AYAT SUCI / QUOTE SECTION -->
+    <section class="section quote-section">
+      <div class="quote-box">
+        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+        <p class="quote-text">
+          "Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+        </p>
+        <div class="quote-source">QS. Ar-Rum: 21</div>
+      </div>
+    </section>
+
+    <!-- 3. MEMPELAI SECTION -->
+    <section class="section" id="mempelai">
+      <div class="section-title-wrap" style="margin-bottom: 2rem;">
+        <span class="section-tag" style="font-size: 0.9rem; letter-spacing: 4px; font-weight: 600;">PASANGAN MEMPELAI</span>
+      </div>
+
+      <div class="couple-grid">
+        <!-- Groom Card -->
+        <div class="couple-card">
+          <div class="couple-avatar-wrap">
+            <img id="groom-img" src="assets/images/groom.jpg" alt="Kris Ossy Novian" class="couple-avatar" />
+          </div>
+          <h3 id="groom-name" class="couple-name">Kris Ossy Novian</h3>
+          <p id="groom-parents" class="couple-parents">Putra dari Bapak Misran & Ibu Fitriya</p>
+        </div>
+
+        <div class="couple-divider">&</div>
+
+        <!-- Bride Card -->
+        <div class="couple-card">
+          <div class="couple-avatar-wrap">
+            <img id="bride-img" src="assets/images/bride.jpg" alt="Fazira Leonita Agustiningsih" class="couple-avatar" />
+          </div>
+          <h3 id="bride-name" class="couple-name">Fazira Leonita Agustiningsih</h3>
+          <p id="bride-parents" class="couple-parents">Putri dari Bapak Toni Hariadi & Ibu Rosmawati Ritonga</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. LIVE COUNTDOWN SECTION -->
+    <section class="section countdown-section" id="countdown">
+      <div class="section-title-wrap">
+        <span class="section-tag" style="color:var(--color-gold-light);">Hitung Mundur Acara</span>
+        <h2 class="section-title">Save The Date</h2>
+      </div>
+
+      <p id="countdown-date" style="font-family:var(--font-serif); font-size:1.15rem; color:var(--color-gold-light);">Minggu, 15 November 2026</p>
+
+      <div class="countdown-grid">
+        <div class="countdown-card">
+          <div id="days" class="countdown-number">00</div>
+          <div class="countdown-label">Hari</div>
+        </div>
+        <div class="countdown-card">
+          <div id="hours" class="countdown-number">00</div>
+          <div class="countdown-label">Jam</div>
+        </div>
+        <div class="countdown-card">
+          <div id="minutes" class="countdown-number">00</div>
+          <div class="countdown-label">Menit</div>
+        </div>
+        <div class="countdown-card">
+          <div id="seconds" class="countdown-number">00</div>
+          <div class="countdown-label">Detik</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. DETAIL ACARA SECTION -->
+    <section class="section" id="acara">
+      <div class="section-title-wrap">
+        <span class="section-tag">Jadwal & Waktu</span>
+        <h2 class="section-title">Rangkaian Acara</h2>
+      </div>
+
+      <div id="events-container">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 6. LOVE STORY SECTION -->
+    <section class="section" id="story" style="background:var(--color-cream-card);">
+      <div class="section-title-wrap">
+        <span class="section-tag">Perjalanan Kami</span>
+        <h2 class="section-title">Kisah Cinta</h2>
+      </div>
+
+      <div id="timeline-container" class="timeline">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 7. OUR MOMENTS / GALERI SECTION -->
+    <section class="section" id="galeri">
+      <div class="section-title-wrap">
+        <span class="section-tag">Galeri Kenangan</span>
+        <h2 class="section-title">Our Moments</h2>
+      </div>
+
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 8. AMPLOP DIGITAL / WEDDING GIFT SECTION -->
+    <section class="section" id="gift" style="background:var(--color-cream-card);">
+      <div class="section-title-wrap">
+        <span class="section-tag">Tanda Kasih</span>
+        <h2 class="section-title">Amplop Digital & Hadiah</h2>
+      </div>
+      <p style="text-align:center; font-size:0.85rem; color:var(--color-text-muted); margin-bottom:2rem;">
+        Doa restu Anda merupakan hadiah terindah bagi kami. Namun jika Anda ingin memberikan tanda kasih atau hadiah, Anda dapat menggunakan layanan di bawah ini:
+      </p>
+
+      <div id="gift-container">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 9. RSVP & BUKU TAMU SECTION -->
+    <section class="section" id="rsvp">
+      <div class="section-title-wrap">
+        <span class="section-tag">Buku Tamu & Restu</span>
+        <h2 class="section-title">RSVP & Ucapan Doa</h2>
+      </div>
+
+      <!-- Form RSVP -->
+      <form id="rsvp-form" class="rsvp-form">
+        <div class="form-group">
+          <label class="form-label" for="rsvp-name">Nama Lengkap</label>
+          <input type="text" id="rsvp-name" class="form-control" placeholder="Masukkan Nama Anda" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="rsvp-status">Konfirmasi Kehadiran</label>
+          <select id="rsvp-status" class="form-control">
+            <option value="Hadir">Hadir</option>
+            <option value="Tidak Hadir">Tidak Hadir</option>
+            <option value="Masih Ragu">Masih Ragu</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="rsvp-message">Ucapan & Doa Restu</label>
+          <textarea id="rsvp-message" class="form-control" rows="3" placeholder="Tuliskan pesan & doa manis untuk Kris & Zira..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;">
+          <i class="fas fa-paper-plane"></i> Kirim Ucapan & Doa
+        </button>
+      </form>
+
+      <!-- List Ucapan -->
+      <div id="guestbook-list" class="guestbook-list">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 10. FOOTER SECTION -->
+    <footer class="footer">
+      <p style="font-size:0.85rem; color:var(--color-gold-light); text-transform:uppercase; letter-spacing:2px; margin-bottom:0.5rem;">Terima Kasih</p>
+      <div class="footer-names">Kris & Zira</div>
+      <p class="footer-text">Merupakan suatu kehormatan & kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+
+      <div class="footer-copy">
+        Template Undangan Nikah Digital Kris & Zira &copy; 2026. Created with Love.
+      </div>
+    </footer>
+  </div>
+
+  <!-- LIGHTBOX MODAL FOR OUR MOMENTS -->
+  <div id="lightbox" class="lightbox">
+    <span id="lightbox-close" class="lightbox-close">&times;</span>
+    <div style="text-align: center; max-width: 90%;">
+      <img id="lightbox-img" src="" alt="Moment Preview" class="lightbox-content" />
+      <div id="lightbox-caption" style="color:var(--color-gold-light); margin-top:1rem; font-family:var(--font-heading); font-size:1.1rem; text-shadow:0 2px 8px rgba(0,0,0,0.8);"></div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">Berhasil Disalin! ✓</div>
+
+  <!-- Config & Main Scripts -->
+  <script src="config.js?v=3"></script>
+  <script src="script.js?v=3"></script>
+</body>
+</html>
