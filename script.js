@@ -380,7 +380,7 @@ function openLightbox(src, caption) {
   }
 }
 
-/* 6. RSVP Form & Guestbook Comments (Saved to LocalStorage) */
+/* 6. RSVP Form & Guestbook Comments (Saved to https://github.com/krisossy/undangan-kris-zira.) */
 
 function initRSVPForm() {
   const form = document.getElementById('rsvp-form');
