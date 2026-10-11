@@ -381,20 +381,6 @@ function openLightbox(src, caption) {
 }
 
 /* 6. RSVP Form & Guestbook Comments (Saved to LocalStorage) */
-const DEFAULT_COMMENTS = [
-  {
-    name: "Bpk. Hendra & Keluarga",
-    status: "Hadir",
-    message: "Selamat untuk Kris & Zira! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Berkah selalu pernikahan kalian.",
-    time: "2 jam yang lalu"
-  },
-  {
-    name: "Dr. Anisa Putri",
-    status: "Hadir",
-    message: "Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fii khair. Happy wedding Zira & Kris!",
-    time: "5 jam yang lalu"
-  }
-];
 
 function initRSVPForm() {
   const form = document.getElementById('rsvp-form');
@@ -445,7 +431,7 @@ function sendRSVPToSheet(payload) {
 
 function getStoredComments() {
   const data = localStorage.getItem('wedding_comments_kris_zira_nov2026');
-  return data ? JSON.parse(data) : DEFAULT_COMMENTS;
+  return data ? JSON.parse(data) : [];
 }
 
 function saveComment(comment) {
