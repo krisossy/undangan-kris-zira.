@@ -22,7 +22,7 @@ const WEDDING_CONFIG = {
   },
 
   // Tanggal & Waktu Acara (Format ISO untuk Countdown)
-  eventDateISO: "2026-11-15T13:00:00+07:00",
+  eventDateISO: "2026-11-15T14:00:00+07:00",
   formattedDate: "Minggu, 15 November 2026",
   headerDate: "15.11.2026",
 
@@ -33,7 +33,7 @@ const WEDDING_CONFIG = {
       icon: "fa-ring",
       day: "Minggu",
       date: "15 November 2026",
-      time: "13.00 - 14.00 WIB",
+      time: "14.00 - 15.00 WIB",
       venue: "Grand Ballroom Tropical House",
       address: "Jl. Ir. Soekarno Hatta, Kutoanyar, Panggungrejo, Kec. Tulungagung, Kab. Tulungagung, Jawa Timur 66211",
       mapUrl: "https://www.google.com/maps/dir//Tropical+House,+Jl.+Ir.+Soekarno+Hatta,+Kutoanyar,+Panggungrejo,+Kec.+Tulungagung,+Kabupaten+Tulungagung,+Jawa+Timur+66211/@-7.3357132,112.7748002,3498m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x2e78e3002ea04369:0xd92f8ecebb871042!2m2!1d111.8790469!2d-8.0673395?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D"
@@ -43,7 +43,7 @@ const WEDDING_CONFIG = {
       icon: "fa-glass-cheers",
       day: "Minggu",
       date: "15 November 2026",
-      time: "14.00 - 16.00 WIB",
+      time: "15.00 - 17.00 WIB",
       venue: "Grand Ballroom Tropical House",
       address: "Jl. Ir. Soekarno Hatta, Kutoanyar, Panggungrejo, Kec. Tulungagung, Kab. Tulungagung, Jawa Timur 66211",
       mapUrl: "https://www.google.com/maps/dir//Tropical+House,+Jl.+Ir.+Soekarno+Hatta,+Kutoanyar,+Panggungrejo,+Kec.+Tulungagung,+Kabupaten+Tulungagung,+Jawa+Timur+66211/@-7.3357132,112.7748002,3498m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x2e78e3002ea04369:0xd92f8ecebb871042!2m2!1d111.8790469!2d-8.0673395?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D"
